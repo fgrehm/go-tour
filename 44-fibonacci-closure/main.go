@@ -11,10 +11,8 @@ func fibonacci() func() int {
             current++
             return current
         }
-        ret := current + previous
-        previous = current
-        current = ret
-        return ret
+        previous, current = current, current + previous
+        return current
     }
 }
 
