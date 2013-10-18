@@ -4,6 +4,8 @@ import (
 	"fmt"
 )
 
+var urlsFetched map[string]bool = make(map[string]bool)
+
 type Fetcher interface {
 	// Fetch returns the body of URL and
 	// a slice of URLs found on that page.
@@ -14,11 +16,18 @@ type Fetcher interface {
 // pages starting with url, to a maximum of depth.
 func Crawl(url string, depth int, fetcher Fetcher) {
 	// TODO: Fetch URLs in parallel.
-	// TODO: Don't fetch the same URL twice.
 	// This implementation doesn't do either:
 	if depth <= 0 {
 		return
 	}
+
+	if urlsFetched[url] {
+		fmt.Printf("already crawled: %s\n", url)
+		return
+	} else {
+		urlsFetched[url] = true
+	}
+
 	body, urls, err := fetcher.Fetch(url)
 	if err != nil {
 		fmt.Println(err)
