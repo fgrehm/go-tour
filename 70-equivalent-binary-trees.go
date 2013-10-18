@@ -14,12 +14,17 @@ import (
 // Walk walks the tree t sending all values
 // from the tree to the channel ch.
 func Walk(t *tree.Tree, ch chan int) {
+	walkTree(t, ch)
+	close(ch)
+}
+
+func walkTree(t *tree.Tree, ch chan int) {
 	if t.Left != nil {
-		Walk(t.Left, ch)
+		walkTree(t.Left, ch)
 	}
 	ch <- t.Value
 	if t.Right != nil {
-		Walk(t.Right, ch)
+		walkTree(t.Right, ch)
 	}
 }
 
@@ -29,8 +34,8 @@ func Walk(t *tree.Tree, ch chan int) {
 
 func main() {
 	ch := make(chan int)
-	go Walk(tree.New(1), ch)
-	for i := 0; i < 10; i++ {
-		fmt.Println(<-ch)
+	go Walk(tree.New(2), ch)
+	for i := range ch {
+		fmt.Println(i)
 	}
 }
