@@ -25,5 +25,6 @@ func main() {
 	http.Handle("/string", String("I'm a frayed knot."))
 	http.Handle("/struct-go", &Struct{"Hello", ":", "Gophers!"})
 	http.Handle("/struct-ruby", &Struct{"Hello", ":", "Rubysts!"})
-	http.ListenAndServe("localhost:4000", nil)
+	fmt.Println("Listening on 0.0.0.0:4000")
+	http.ListenAndServe("0.0.0.0:4000", nil)
 }
