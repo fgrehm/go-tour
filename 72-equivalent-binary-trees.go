@@ -50,4 +50,7 @@ func main() {
 	}
 	fmt.Println("Should return true:", Same(tree.New(1), tree.New(1)))
 	fmt.Println("Should return false:", Same(tree.New(1), tree.New(2)))
+	fmt.Println("Should return false:", Same(nil, tree.New(10)))
+	}
+
 }
